@@ -82,7 +82,7 @@ void RandomArray(int array[], int size) {
     
     // after size iterations, each index of array will have a random
     // number in the range [0, 100)
-    for (int temp = 0; temp < size; temp += 1) {
+    for (temp = 0; temp < size; temp += 1) {
         array[temp] = rand() % 100;
     }
 }
@@ -90,33 +90,47 @@ void RandomArray(int array[], int size) {
 //Print the content of array
 void PrintArray(int array[], int size) {
     int temp;
-    cout << "["
-    for (int temp = 0; temp < size; temp += 1) {
+    cout << "[";
+    for (temp = 0; temp < size; temp += 1) {
         if (temp != size - 1) {
-            cout << " " << array[temp] << "," 
+            cout << " " << array[temp] << ","; 
         } else {
-            cout << " " << array[temp]
+            cout << " " << array[temp];
         }
     }
     cout << " ]" << endl;
 }    
 
 // Helper function for SortArray
-// Finds the smallest value in array from [leftBound, rightBound)
-int minInRange(int array[], int leftBound, int rightBound) {
+// Finds index of the smallest value in array from [leftBound, rightBound)
+int minIndexInRange(int array[], int leftBound, int rightBound) {
     int temp;
-    int minSoFar = array[0];
+    int minSoFar = array[leftBound];
+    int minDex = leftBound;
     for (temp = leftBound; temp < rightBound; temp += 1) {
         if (array[temp] < minSoFar) {
             minSoFar = array[temp];
+            minDex = temp;
         }
     }
-    return minSoFar;
+    return minDex;
+}
+
+// Helper function for SortArray
+// Swaps the elements at two indexes
+void swap(int array[], int index1, int index2) {
+    int temp = array[index1];
+    array[index1] = array[index2];
+    array[index2] = temp;
 }
 
 //Sort the array in ascending order
 void SortArray(int array[], int size) {
-	
+    int temp;
+    for (temp = 0; temp < size; temp += 1) {
+        int minDex = minIndexInRange(array, temp, size);
+        swap(array, temp, minDex);
+    }
 }
  
 int main() {

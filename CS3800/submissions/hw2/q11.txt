@@ -1,0 +1,22 @@
+# Accepts All binary strings in which all two successive ones
+# are separated by an odd number of zeroes
+
+start: truthy
+
+accept-states: [truthy, open_1]
+
+transitions:
+- [truthy, 0, truthy]
+- [truthy, 1, open_1]
+
+- [open_1, 0, odd_zero]
+- [open_1, 1, falsy]
+
+- [odd_zero, 0, even_zero]
+- [odd_zero, 1, open_1]
+
+- [even_zero, 0, odd_zero]
+- [even_zero, 1, falsy]
+
+- [falsy, 0, falsy]
+- [falsy, 1, falsy]

@@ -1,0 +1,13 @@
+# comment line
+# comment line
+
+start: start_state_name
+
+accept-states: [state1, state2, state3]
+
+transitions:
+- [state, symbol, state]
+- [state, symbol, state]
+
+- [state, symbol, state]
+- [state, symbol, state]

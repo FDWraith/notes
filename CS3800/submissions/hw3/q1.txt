@@ -1,0 +1,23 @@
+# Accepts all two-rowed binary strings such that the binary number 
+# formed by the top row is smaller than the binary number of the bottom row.
+
+start: next
+
+accept-states: [truthy]
+
+transitions:
+- [next, 00, next]
+- [next, 11, next]
+- [next, 01, truthy]
+- [next, 10, falsy]
+
+- [truthy, 00, truthy]
+- [truthy, 11, truthy]
+- [truthy, 01, truthy]
+- [truthy, 10, truthy]
+
+- [falsy, 00, falsy]
+- [falsy, 11, falsy]
+- [falsy, 01, falsy]
+- [falsy, 10, falsy]
+

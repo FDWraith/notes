@@ -1,0 +1,19 @@
+# Two-way turing machine that for an input
+# bin(x), outputs bin(x + 1)
+
+start: s
+accept: good
+reject: bad
+
+transitions: 
+- [s, _, carry1, _, L]
+- [s, 0, s, 0, R]
+- [s, 1, s, 1, R]
+
+- [carry1, 0, carry0, 1, L]
+- [carry1, 1, carry1, 0, L]
+- [carry1, _, carry0, 1, L]
+
+- [carry0, 0, carry0, 0, L]
+- [carry0, 1, carry0, 1, L]
+- [carry0, _, good, _, R]

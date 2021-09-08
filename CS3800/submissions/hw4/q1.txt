@@ -1,0 +1,35 @@
+# Accepts all three-rowed binary strings such that the sum of the binary 
+# strings formed in the first two rows sum to the third row
+
+start: zero
+
+accept-states: [zero]
+
+transitions:
+- [zero, 000, zero]
+- [zero, 011, zero]
+- [zero, 101, zero]
+- [zero, 001, one]
+- [zero, 110, reject]
+- [zero, 010, reject]
+- [zero, 100, reject]
+- [zero, 111, reject]
+
+- [one, 010, one]
+- [one, 100, one]
+- [one, 111, one]
+- [one, 110, zero]
+- [one, 000, reject]
+- [one, 011, reject]
+- [one, 101, reject]
+- [one, 001, reject]
+
+- [reject, 000, reject]
+- [reject, 001, reject]
+- [reject, 010, reject]
+- [reject, 011, reject]
+- [reject, 100, reject]
+- [reject, 101, reject]
+- [reject, 110, reject]
+- [reject, 111, reject]
+

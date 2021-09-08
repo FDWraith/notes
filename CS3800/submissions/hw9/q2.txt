@@ -1,0 +1,42 @@
+# Turing machine that for a given w in { a, b, c }*,
+# prints out next(w) in shortlex order
+
+start: s
+accept: good
+reject: bad
+
+transitions:
+- [s, _, good, a, L]
+- [s, a, pushDollar, a, L]
+- [s, b, pushDollar, b, L]
+- [s, c, pushDollar, c, L]
+
+- [pushDollar, a, pushA, $, R]
+- [pushDollar, b, pushB, $, R]
+- [pushDollar, c, pushC, $, R]
+
+- [pushA, a, pushA, a, R]
+- [pushA, b, pushB, a, R]
+- [pushA, c, pushC, a, R]
+- [pushA, _, increment, a, R]
+
+- [pushB, a, pushA, b, R]
+- [pushB, b, pushB, b, R]
+- [pushB, c, pushC, b, R]
+- [pushB, _, increment, b, R]
+
+- [pushC, a, pushA, c, R]
+- [pushC, b, pushB, c, R]
+- [pushC, c, pushC, c, R]
+- [pushC, _, increment, c, R]
+
+- [increment, $, good, a, L]
+- [increment, a, return, b, L]
+- [increment, b, return, c, L]
+- [increment, c, increment, a, L]
+- [increment, _, increment, _, L]
+
+- [return, a, return, a, L]
+- [return, b, return, b, L]
+- [return, c, return, c, L]
+- [return, $, good, _, R]

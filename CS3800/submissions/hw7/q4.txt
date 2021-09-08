@@ -1,0 +1,82 @@
+# Turing machine that decides
+# w c w | w \in { a, b }*
+
+start: start
+accept: good
+reject: bad
+
+transitions:
+- [start, _, bad, _, R]
+- [start, a, shiftA, $, R]
+- [start, b, shiftB, $, R]
+- [start, c, good, c, R]
+
+- [shiftA, a, shiftA, a_, R]
+- [shiftA, b, shiftB, a_, R]
+- [shiftA, c, shiftC, a_, R]
+- [shiftA, _, restart, a_, L]
+
+- [shiftB, a, shiftA, b_, R]
+- [shiftB, b, shiftB, b_, R]
+- [shiftB, c, shiftC, b_, R]
+- [shiftB, _, restart, b_, L]
+
+- [shiftC, a, shiftA, c, R]
+- [shiftC, b, shiftB, c, R]
+- [shiftC, c, bad, c, R]
+- [shiftC, _, bad, _, R]
+
+- [restart, $, readToC, $, R]
+- [restart, a_, restart, a_, L]
+- [restart, aa, restart, aa, L]
+- [restart, b_, restart, b_, L]
+- [restart, bb, restart, bb, L]
+- [restart, c, restart, c, L]
+
+- [readToC, a_, readToC, a_, R]
+- [readToC, aa, readToC, aa, R]
+- [readToC, b_, readToC, b_, R]
+- [readToC, bb, readToC, bb, R]
+- [readToC, c, bringNext, c, R]
+- [readToC, _, bad, _, R]
+
+- [bringNext, x, bringNext, x, R]
+- [bringNext, a_, bringA, x, L]
+- [bringNext, b_, bringB, x, L]
+- [bringNext, _, returnToEnsure, _, L]
+
+- [bringA, $, putA, $, R]
+- [bringA, a_, bringA, a_, L]
+- [bringA, aa, bringA, aa, L]
+- [bringA, b_, bringA, b_, L]
+- [bringA, bb, bringA, bb, L]
+- [bringA, c, bringA, c, L]
+- [bringA, x, bringA, x, L]
+
+- [bringB, $, putB, $, R]
+- [bringB, a_, bringB, a_, L]
+- [bringB, aa, bringB, aa, L]
+- [bringB, b_, bringB, b_, L]
+- [bringB, bb, bringB, bb, L]
+- [bringB, c, bringB, c, L]
+- [bringB, x, bringB, x, L]
+
+- [putA, a_, restart, aa, L]
+- [putA, b_, bad, b_, R]
+- [putA, aa, putA, aa, R]
+- [putA, bb, putA, bb, R]
+- [putA, c, bad, c, R]
+
+- [putB, a_, bad, a_, R]
+- [putB, b_, restart, bb, L]
+- [putB, aa, putB, aa, R]
+- [putB, bb, putB, bb, R]
+- [putB, c, bad, c, R]
+
+- [returnToEnsure, x, returnToEnsure, x, L]
+- [returnToEnsure, c, returnToEnsure, c, L]
+- [returnToEnsure, a_, bad, a_, L]
+- [returnToEnsure, b_, bad, b_, L]
+- [returnToEnsure, aa, returnToEnsure, aa, L]
+- [returnToEnsure, bb, returnToEnsure, bb, L]
+- [returnToEnsure, $, good, $, R]

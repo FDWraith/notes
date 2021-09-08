@@ -1,0 +1,72 @@
+# decides whether an input string takes the form
+# a^i b^j c^k, such that 0 < i < j < k
+
+start: start
+accept: good
+reject: bad
+
+transitions:
+- [start, _, bad, _, R]
+- [start, a, findB, _, R]
+- [start, b, bad, _, R]
+- [start, c, bad, _, R]
+- [start, bx, start2, _, R]
+
+- [findB, a, findB, a, R]
+- [findB, _, bad, _, R]
+- [findB, b, findC, bx, R]
+- [findB, c, bad, c, R]
+- [findB, bx, findB, bx, R]
+- [findB, cx, bad, cx, R]
+
+- [findC, a, bad, a, R]
+- [findC, _, bad, _, R]
+- [findC, bx, bad, _, R]
+- [findC, b, findC, b, R]
+- [findC, c, return, cx, L]
+- [findC, cx, findC, cx, R]
+
+- [return, cx, return, cx, L]
+- [return, c, return, c, L]
+- [return, bx, return, bx, L]
+- [return, b, return, b, L]
+- [return, a, return, a, L]
+- [return, _, start, _, R]
+
+- [start2, bx, start2, _, R]
+- [start2, b, findC2, _, R]
+- [start2, a, bad, a, R]
+- [start2, c, bad, c, R]
+- [start2, _, bad, _, R]
+- [start2, cx, bad, cx, R]
+
+- [start2.1, b, findC2, _, R]
+- [start2.1, a, bad, a, R]
+- [start2.1, c, bad, c, R]
+- [start2.1, _, bad, _, R]
+- [start2.1, cx, start3, _, R]
+
+- [findC2, a, bad, a, R]
+- [findC2, _, bad, _, R]
+- [findC2, bx, bad, bx, R]
+- [findC2, b, findC2, b, R]
+- [findC2, c, return2, cx, L]
+- [findC2, cx, findC2, cx, R]
+
+- [return2, _, start2.1, _, R]
+- [return2, a, bad, a, L]
+- [return2, b, return2, b, L]
+- [return2, c, return2, c, L]
+- [return2, cx, return2, cx, L]
+
+- [start3, cx, start3, _, R]
+- [start3, c, remainC, _, R]
+- [start3, b, bad, b, R]
+- [start3, a, bad, a, R]
+- [start3, _, bad, _, R]
+
+- [remainC, c, remainC, c, R]
+- [remainC, b, bad, b, R]
+- [remainC, a, bad, a, R]
+- [remainC, _, good, _, R]
+

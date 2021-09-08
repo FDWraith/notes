@@ -1,0 +1,50 @@
+# Turing machine that decides if a 
+# word w \in { a, b }* is a palindrome (w = w^R)
+
+start: start
+accept: good
+reject: bad
+
+transitions:
+- [start, _, good, _, R]
+- [start, a, peekRight, a, R]
+- [start, b, peekRight, b, R]
+
+- [peekRight, _, good, _, R]
+- [peekRight, a, bounceBack, a, L]
+- [peekRight, b, bounceBack, b, L]
+
+- [bounceBack, a, findRightA, _, R]
+- [bounceBack, b, findRightB, _, R]
+
+- [findRightA, a, peekEndA, a, R]
+- [findRightA, b, findRightA, b, R]
+- [findRightA, _, bad, _, R]
+
+- [peekEndA, _, bounceEndA, _, L]
+- [peekEndA, a, endPeekA, a, L]
+- [peekEndA, b, endPeekA, b, L]
+
+- [endPeekA, a, findRightA, a, R]
+- [endPeekA, b, findRightA, b, R]
+
+- [bounceEndA, a, return, _, L]
+
+- [findRightB, b, peekEndB, b, R]
+- [findRightB, a, findRightB, a, R]
+- [findRightB, _, bad, _, R]
+
+- [peekEndB, _, bounceEndB, _, L]
+- [peekEndB, a, endPeekB, a, L]
+- [peekEndB, b, endPeekB, b, L]
+
+- [endPeekB, a, findRightB, a, R]
+- [endPeekB, b, findRightB, b, R]
+
+- [bounceEndB, b, return, _, L]
+
+- [return, _, start, _, R]
+- [return, a, return, a, L]
+- [return, b, return, b, L]
+
+

@@ -1,0 +1,314 @@
+\documentclass[11pt]{article}
+
+\newcommand{\yourname}{Kevin Zhang}
+
+\def\comments{0}
+
+%format and packages
+
+%\usepackage{algorithm, algorithmic}
+\usepackage{forest}
+\usepackage{tikz}
+\usepackage{algpseudocode}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{tcolorbox}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{verbatim}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{microtype}
+\usepackage{kpfonts}
+\usepackage{palatino}
+	\DeclareMathAlphabet{\mathtt}{OT1}{cmtt}{m}{n}
+	\SetMathAlphabet{\mathtt}{bold}{OT1}{cmtt}{bx}{n}
+	\DeclareMathAlphabet{\mathsf}{OT1}{cmss}{m}{n}
+	\SetMathAlphabet{\mathsf}{bold}{OT1}{cmss}{bx}{n}
+	\renewcommand*\ttdefault{cmtt}
+	\renewcommand*\sfdefault{cmss}
+	\renewcommand{\baselinestretch}{1.06}
+
+\usepackage[boxruled,vlined,nofillcomment]{algorithm2e}
+	\SetKwProg{Fn}{Function}{\string:}{}
+	\SetKwFor{While}{While}{}{}
+	\SetKwFor{For}{For}{}{}
+	\SetKwIF{If}{ElseIf}{Else}{If}{:}{ElseIf}{Else}{:}
+	\SetKw{Return}{Return}
+\usepackage{listings}% http://ctan.org/pkg/listings
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}	
+
+%enclosure macros
+\newcommand{\paren}[1]{\ensuremath{\left( {#1} \right)}}
+\newcommand{\bracket}[1]{\ensuremath{\left\{ {#1} \right\}}}
+\renewcommand{\sb}[1]{\ensuremath{\left[ {#1} \right\]}}
+\newcommand{\ab}[1]{\ensuremath{\left\langle {#1} \right\rangle}}
+
+%probability macros
+\newcommand{\ex}[2]{{\ifx&#1& \mathbb{E} \else \underset{#1}{\mathbb{E}} \fi \left[#2\right]}}
+\newcommand{\pr}[2]{{\ifx&#1& \mathbb{P} \else \underset{#1}{\mathbb{P}} \fi \left[#2\right]}}
+\newcommand{\var}[2]{{\ifx&#1& \mathrm{Var} \else \underset{#1}{\mathrm{Var}} \fi \left[#2\right]}}
+
+%useful CS macros
+\newcommand{\poly}{\mathrm{poly}}
+\newcommand{\polylog}{\mathrm{polylog}}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\pmo}{\{\pm1\}}
+\newcommand{\getsr}{\gets_{\mbox{\tiny R}}}
+\newcommand{\card}[1]{\left| #1 \right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\negl}{\mathrm{negl}}
+\newcommand{\eps}{\varepsilon}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\eqand}{\qquad \textrm{and} \qquad}
+\newcommand{\ind}[1]{\mathbb{I}\{#1\}}
+\newcommand{\sslash}{\ensuremath{\mathbin{/\mkern-3mu/}}}
+\newcommand{\pipe}{\hspace{3pt}|\hspace{3pt}}
+
+%mathbb
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+%mathcal
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+%theorem macros
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{fact}[thm]{Fact}
+\newtheorem{clm}[thm]{Claim}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{conj}[thm]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheoremstyle{case}{}{}{}{}{}{:}{ }{}
+\theoremstyle{case}
+\newtheorem{case}{Case}
+
+\theoremstyle{theorem}
+\newtheorem{prob}{Problem}
+\newtheorem{sol}{Solution}
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{document}
+{\large
+\noindent Name: \yourname}
+
+\vspace{15pt}
+
+\begin{prob}\end{prob}
+
+\begin{enumerate}[label=(\alph*)]
+
+\item $M_1$ decides $L$ (and as a consequence, also recognizes $L$). 
+The reason is that for any given string (including the empty string), $M$ producesa valid output. 
+The transition $s \hspace{3px} 1 \hspace{3px} 1 \hspace{3px} R \hspace{3px} q_{accept}$ covers all the cases where $w$ is in $L$ 
+(and therefore begins with 1). State $q$ eventually reaches $q_{reject}$ when the machine
+reaches the end of the string, and all transitions from $s$ eventually lead to $q$. 
+
+\item $M_2$ neither recognizes nor decides $L$. The reason is that there is no transition
+from $s$ to $q$ -- the transition $s \hspace{3px} 0 \hspace{3px} 0 \hspace{3px} R \hspace{3px} s$ loops back to $s$. This means 
+that $M_2$ decides the language that has a $1$ -- the machine reaches $q_{accept}$ when it sees $1$,
+and $q_{reject}$ if it reaches the end without seeing $1$. This is not the same as $L$.
+
+\item $M_3$ recognizes $L$. The reason is that it accepts every word that starts with $1$, and 
+rejects every word that starts with $0$. The only case that $M_3$ loops infinitely in is
+the empty string, because of the transition $s \hspace{3px} \text{\textvisiblespace} \hspace{3px} \text{\textvisiblespace} \hspace{3px} R \hspace{3px} s$.
+
+\item $M_4$ decides $L$ (and as a consequence, also recognizes $L$). The reason is similar
+to $M_1$, where the machine eventually rejects all strings that begin with $0$, and accepts
+all strings that start with $1$. The empty string, in this case, is rejected outright, instead
+of being rejected when the machine reaches the end.
+
+\end{enumerate}
+
+\begin{prob}\end{prob}
+
+$M$ decides $L$ when it has a two-way infinite tape. The reason is because when
+the tape is one-way, $M$ runs into problems when the word is not greater than length $2$.
+For example, $0$ is a string that should be rejected by $M$, but on a one-way tape,
+the move-left transition gets ignored, but the state transition still happens. The 
+transitions might proceed as follows: $(s, 0) (s, 0, R)$, $(s, \text{\textvisiblespace}) (q_1, \text{\textvisiblespace}, L)$, 
+$(q_1, 0) (q_2, 0, L)$, $(q_2, 0) (q_{accept}, 0, R)$. The last transition happens 
+because the machine stays put on the left-most cell. As a result, $0$ is accepted,
+when it isn't in $L$. 
+
+\newpage
+
+\begin{prob}\end{prob}
+
+\begin{tabular}{l l l l l}
+			q & 
+			$\begin{pmatrix} b \\ \text{\textvisiblespace} \end{pmatrix}$ & 
+			$q_{reject}$ & 
+			$\begin{pmatrix} b \\ \text{\textvisiblespace} \end{pmatrix}$ & 
+			$\begin{pmatrix} S \\ S \end{pmatrix}$
+\end{tabular}\\
+
+\vspace{10pt}
+
+\begin{tabular}{l l l l l}
+			q & 
+			$\begin{pmatrix} b \\ a \end{pmatrix}$ & 
+			q & 
+			$\begin{pmatrix} \text{\textvisiblespace} \\ \text{\textvisiblespace} \end{pmatrix}$ & 
+			$\begin{pmatrix} R \\ L \end{pmatrix}$
+\end{tabular}\\
+
+\vspace{10pt}
+
+\begin{tabular}{l l l l l}
+			q & 
+			$\begin{pmatrix} \text{\textvisiblespace} \\ a \end{pmatrix}$ & 
+			$q_{reject}$ & 
+			$\begin{pmatrix} \text{\textvisiblespace} \\ a \end{pmatrix}$ & 
+			$\begin{pmatrix} S \\ S \end{pmatrix}$
+\end{tabular}\\
+
+\vspace{10pt}
+
+\begin{tabular}{l l l l l}
+			q & 
+			$\begin{pmatrix} \text{\textvisiblespace} \\ \text{\textvisiblespace} \end{pmatrix}$ & 
+			$q_{accept}$ & 
+			$\begin{pmatrix} \text{\textvisiblespace} \\ \text{\textvisiblespace} \end{pmatrix}$ & 
+			$\begin{pmatrix} S \\ S \end{pmatrix}$
+\end{tabular}\\
+
+\vspace{10pt}
+
+\begin{tabular}{l l l l l}
+			q & 
+			$\begin{pmatrix} a \\ \text{\textvisiblespace} \end{pmatrix}$ & 
+			$q_{reject}$ & 
+			$\begin{pmatrix} a \\ \text{\textvisiblespace} \end{pmatrix}$ & 
+			$\begin{pmatrix} S \\ S \end{pmatrix}$
+\end{tabular}\\
+
+\vspace{10pt}
+
+\begin{tabular}{l l l l l}
+			q & 
+			$\begin{pmatrix} a \\ a \end{pmatrix}$ & 
+			$q_{reject}$ & 
+			$\begin{pmatrix} a \\ a \end{pmatrix}$ & 
+			$\begin{pmatrix} S \\ S \end{pmatrix}$
+\end{tabular}\\
+
+\newpage
+
+\begin{prob}\end{prob}
+
+We can design a 5-state turing machine with a tape alphabet that includes $w$ as one of its symbols.
+\textbf{Parts} of an example machine for the string $00001$ can be shown. 
+
+\begin{verbatim}
+
+start: s
+accept: good
+reject: bad
+
+transitions: 
+- [s, _, s, 00001$, S]
+- [s, 00001$, p0, 0001$, R]
+- [s, 0001$, p0, 001$, R]
+- [s, 001$, p0, 01$, R]
+- [s, 01$, p0, 1$, R]
+- [s, 1$, p1, $, R]
+
+- [s, 0, s, 0, L]
+- [s, 1, s, 1, L]
+- [s, $, good, _, R]
+
+- [p0, _, s, 0, L]
+- [p0, 0, p0, 0, R]
+- [p0, 1, p0, 1, R]
+
+- [p1, _, s, 1, L]
+- [p1, 0, p1, 0, R]
+- [p1, 1, p1, 1, R]
+
+\end{verbatim}
+
+The way the machine is to use a larger tape alphabet to represent what is
+left to write. For example, we start with $00001$, and pop off the first $0$,
+and write $0001$. The popped $0$ is then encoded into the state \textbf{p0}, which will 
+place the $0$ in the first open space to the right, before returning. This
+will happen for each symbol, with \textbf{p1} representing when we want to move $1$ instead of $0$.
+When we are done popping, we put a $\$$ as a placeholder (so that \textbf{s} can
+make its way back), and then move the head to the right, and into $q_{accept}$. This
+kind of machine will have as many transitions (and a tape alphabet to match) as the length
+of string, but will require only 5 states (s, p0, p1, $q_{accept}$, $q_{reject}$).
+
+Generalized, we can represent a word $w$ as $a_0a_1a_2a_3 ... a_n$. Our starting 
+transition is then 
+\begin{lstlisting}
+[s, _, s, $a_0a_1a_2a_3 ... a_n \$ $, S]
+\end{lstlisting}
+For every letter $a_i | 0 \leq i \leq n$, we will also have the transition 
+\begin{lstlisting}
+[s, $a_ia_{i+1} ... a_n \$$, p0 | p1, $a_{i+1} ... a_n \$$, R]
+\end{lstlisting}
+where \texttt{p0 | p1} is dependent on what $a_i$ is. The rest of the machine can then stay the same.
+
+\newpage
+
+\begin{prob}\end{prob}
+
+\begin{enumerate}[label=(\alph*)]
+
+\item $L \subseteq \Sigma^* \text{is decidable} \Rightarrow \text{There is an enumerator for } L \text{ that enumerates in shortlex order}$ \\
+Assume $L$ is decidable with machine $M$. Then, we can take $w_1, w_2, w_3, ... \in \Sigma^*$, where
+the words are taken in shortlex order. We run these words through $M$, which will either accept,
+or reject. We can construct an enumerator that prints out only the words that accept -- this
+results in an enumerator for $L$ that prints the words in shortlex order.
+
+\item $L \subseteq \Sigma^* \text{is decidable} \Leftarrow \text{There is an enumerator for } L \text{ that enumerates in shortlex order}$ \\
+Assume there is an enumerator for $L$ that enumerates in shortlex order. Then, we can construct
+a decider $M$ that on input $w$, runs the enumerator until it reaches the expected shortlex order.
+If the enumerator prints $w$, then we accept. If the enumerator skips over $w$, moving on to the next
+item in shortlex order, we reject. For example, if the enumerator prints $aa$ and then $aab$ for $\Sigma = \{a, b\}$,
+and $w = aaa$, we can safely reject, knowing that if $aaa$ had been in $L$, the enumerator would have
+printed $aaa$ before $aab$ (because of the shortlex order constraint).
+
+\end{enumerate}
+
+\begin{prob}\end{prob}
+
+Suppose we have an infinite Turing-recognizable language $L$. From lecture, we know
+that there must be an enumerator $E$ for $L$. We can modify this enumerator to $\hat{E}$
+such that every time it tries to prints a $w$, we compare $w_n$ with $w_{n-1}$, the word 
+printed previously. If $w_{n-1}$ and $w_{n}$ do not follow shortlex order, we discard
+$w_{n}$ (which is to say, we don't let $\hat{E}$ print $w_{n}$). As $L$ is an infinite
+language, we can be assured that the enumerator will eventually print some word $w_{n}$
+that is in shortlex order \textit{after} $w_{n-1}$. \\
+
+Thus, we have an enumerator $\hat{E}$ that prints a language $A \subseteq L$ in shortlex order.
+$A$ is an infinite decidable subset, because of the theorem in problem 5.
+
+\end{document}

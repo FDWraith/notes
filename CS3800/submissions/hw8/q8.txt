@@ -1,0 +1,75 @@
+# two-way turing machines that when provided bin(x)+bin(y)
+# outputs bin(x+y)
+
+start: s
+accept: good
+reject: bad
+
+transitions:
+- [s, _, good, _, R]
+- [s, 0, s, 0, R]
+- [s, 1, s, 1, R]
+- [s, +, findEnd, +, R]
+
+- [findEnd, _, takeL, _, L]
+- [findEnd, 0, findEnd, 0, R]
+- [findEnd, 1, findEnd, 1, R]
+- [findEnd, 00, findEnd, 00, R]
+- [findEnd, 11, findEnd, 11, R]
+- [findEnd, 01, findEnd, 01, R]
+- [findEnd, 10, findEnd, 10, R]
+- [findEnd, _0, findEnd, _0, R]
+- [findEnd, _1, findEnd, _1, R]
+- [findEnd, +, findEnd, +, R]
+
+- [takeL, 0, bring0, _, L]
+- [takeL, 1, bring1, _, L]
+- [takeL, +, add0, _, L]
+
+- [bring0, 0, bring0, 0, L]
+- [bring0, 1, bring0, 1, L]
+- [bring0, +, put0, +, L]
+
+- [bring1, 0, bring1, 0, L]
+- [bring1, 1, bring1, 1, L]
+- [bring1, +, put1, +, L]
+
+- [put0, 0, findEnd, 00, R]
+- [put0, 1, findEnd, 10, R]
+- [put0, _, findEnd, _0, R]
+- [put0, 00, put0, 00, L]
+- [put0, 10, put0, 10, L]
+- [put0, 11, put0, 11, L]
+- [put0, 01, put0, 01, L]
+- [put0, _0, put0, _0, L]
+- [put0, _1, put0, _1, L]
+
+- [put1, 0, findEnd, 01, R]
+- [put1, 1, findEnd, 11, R]
+- [put1, _, findEnd, _1, R]
+- [put1, 00, put1, 00, L]
+- [put1, 10, put1, 10, L]
+- [put1, 11, put1, 11, L]
+- [put1, 01, put1, 01, L]
+- [put1, _0, put1, _0, L]
+- [put1, _1, put1, _1, L]
+
+- [add0, 00, add0, 0, L]
+- [add0, 01, add0, 1, L]
+- [add0, 11, add1, 0, L]
+- [add0, 10, add0, 1, L]
+- [add0, _0, add0, 0, L]
+- [add0, _1, add0, 1, L]
+- [add0, 0, add0, 0, L]
+- [add0, 1, add0, 1, L]
+- [add0, _, good, _, R]
+
+- [add1, 00, add0, 1, L]
+- [add1, 01, add1, 0, L]
+- [add1, 11, add1, 1, L]
+- [add1, 10, add1, 0, L]
+- [add1, _0, add0, 1, L]
+- [add1, _1, add1, 0, L]
+- [add1, 0, add0, 1, L]
+- [add1, 1, add1, 0, L]
+- [add1, _, add0, 1, L]

@@ -1,0 +1,242 @@
+\documentclass[11pt]{article}
+
+\newcommand{\yourname}{Kevin Zhang}
+
+\def\comments{0}
+
+%format and packages
+
+%\usepackage{algorithm, algorithmic}
+\usepackage{forest}
+\usepackage{tikz}
+\usepackage{algpseudocode}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{tcolorbox}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{verbatim}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{microtype}
+\usepackage{kpfonts}
+\usepackage{palatino}
+	\DeclareMathAlphabet{\mathtt}{OT1}{cmtt}{m}{n}
+	\SetMathAlphabet{\mathtt}{bold}{OT1}{cmtt}{bx}{n}
+	\DeclareMathAlphabet{\mathsf}{OT1}{cmss}{m}{n}
+	\SetMathAlphabet{\mathsf}{bold}{OT1}{cmss}{bx}{n}
+	\renewcommand*\ttdefault{cmtt}
+	\renewcommand*\sfdefault{cmss}
+	\renewcommand{\baselinestretch}{1.06}
+
+\usepackage[boxruled,vlined,nofillcomment]{algorithm2e}
+	\SetKwProg{Fn}{Function}{\string:}{}
+	\SetKwFor{While}{While}{}{}
+	\SetKwFor{For}{For}{}{}
+	\SetKwIF{If}{ElseIf}{Else}{If}{:}{ElseIf}{Else}{:}
+	\SetKw{Return}{Return}
+	
+
+%enclosure macros
+\newcommand{\paren}[1]{\ensuremath{\left( {#1} \right)}}
+\newcommand{\bracket}[1]{\ensuremath{\left\{ {#1} \right\}}}
+\renewcommand{\sb}[1]{\ensuremath{\left[ {#1} \right\]}}
+\newcommand{\ab}[1]{\ensuremath{\left\langle {#1} \right\rangle}}
+
+%probability macros
+\newcommand{\ex}[2]{{\ifx&#1& \mathbb{E} \else \underset{#1}{\mathbb{E}} \fi \left[#2\right]}}
+\newcommand{\pr}[2]{{\ifx&#1& \mathbb{P} \else \underset{#1}{\mathbb{P}} \fi \left[#2\right]}}
+\newcommand{\var}[2]{{\ifx&#1& \mathrm{Var} \else \underset{#1}{\mathrm{Var}} \fi \left[#2\right]}}
+
+%useful CS macros
+\newcommand{\poly}{\mathrm{poly}}
+\newcommand{\polylog}{\mathrm{polylog}}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\pmo}{\{\pm1\}}
+\newcommand{\getsr}{\gets_{\mbox{\tiny R}}}
+\newcommand{\card}[1]{\left| #1 \right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\negl}{\mathrm{negl}}
+\newcommand{\eps}{\varepsilon}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\eqand}{\qquad \textrm{and} \qquad}
+\newcommand{\ind}[1]{\mathbb{I}\{#1\}}
+\newcommand{\sslash}{\ensuremath{\mathbin{/\mkern-3mu/}}}
+\newcommand{\pipe}{\hspace{3pt}|\hspace{3pt}}
+
+%mathbb
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+%mathcal
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+%theorem macros
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{fact}[thm]{Fact}
+\newtheorem{clm}[thm]{Claim}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{conj}[thm]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheoremstyle{case}{}{}{}{}{}{:}{ }{}
+\theoremstyle{case}
+\newtheorem{case}{Case}
+
+\theoremstyle{theorem}
+\newtheorem{prob}{Problem}
+\newtheorem{sol}{Solution}
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{document}
+{\large
+\noindent Name: \yourname}
+
+\vspace{15pt}
+
+\begin{prob}\end{prob}
+
+Assume that $E_{TM}$ is turing recognizable. 
+From the previous homework, problem 10 shows that $\overline{E_{TM}}$ is Turing recognizable.
+From a theorem shown in class, we know that if $\overline{E_{TM}}$ is recognizable AND $E_{TM}$ is recognizable,
+then $E_{TM}\text{ is decidable}$. From the previous homework, problem 6c shows that $E_{TM}$ is not 
+decidable. Therefore, $E_{TM}$ cannot be recognizable, as that would create a contradiction.
+
+\begin{prob}\end{prob}
+
+We can build a decider for $S$ as such:
+
+For a given input $w \in \Sigma^*$, if $w$ is not an encoding $\langle M \rangle$, then reject. 
+
+If it is an encoding $\langle M \rangle$, then do the following:
+
+Construct DFA $\hat{M} \pipe L(\hat{M}) = L(M) \cap L(M)^R$. This is possible because
+$L(M)$ is a regular language (because $M$ is a DFA), and regular languages are closed
+under intersection and reverse. 
+
+Decide whether $L(\hat{M}) = L(M)$ (Equality problem for DFAs). If yes, accept. If no, reject. 
+
+\begin{prob}\end{prob}
+
+We can build a decider for $E$ as such:
+
+For a given input $w \in \Sigma^*$, if $w$ is not an encoding $\langle M \rangle$, then reject.
+
+If it is an encoding $\langle M \rangle$, then do the following:
+
+Construct PDA $\hat{M} \pipe L(\hat{M}) = L(M) \cap L(A)$, where 
+$A = \{ w \in \Sigma^* \pipe w \text{ has more 1s than 0s}\}$. This is possible because $L(A)$ is
+a CFL (from homework 9, problem 1), and $L(M)$ is a regular language (because $M$ is a DFA). 
+The intersection of a CFL and a Regular Language is a CFL (from a theorem shown in class).
+
+Decide whether $L(\hat{M}) = \varnothing$ (Emptiness problem for CFGs). If yes, reject. If no, accept.
+
+\begin{prob}\end{prob}
+
+\begin{enumerate}[label=(\alph*)]
+
+\item
+
+We can construct $\hat{M}$ from $M$ by doing the following:
+
+Every transition $(q, a), (r, \text{\textvisiblespace}, M)$, replace $\text{\textvisiblespace}$ with
+a new tape symbol $x \pipe x \notin \Gamma$. Then, add transitions $(q, x) (r, y, M)$ for 
+every transition $(q, \text{\textvisiblespace}) (r, y, M)$. 
+
+This effectively uses a new symbol $x$ in lieu of the blank, but also treats $x$ as
+if it were a blank.
+
+\item
+
+Let $K = \{\langle M \rangle \pipe \text{M is a TM that on input} \varepsilon\text{, prints a blank}\}$. 
+
+$ACCEPT-EMPTY \leq_{T} K$ can be shown below:
+
+We can construct a decider for $ACCEPT-EMPTY$ using an oracle for $K$. On
+input $w \in \Sigma^*$, if $w$ is not encoding, reject. If $w$ is encoding of $M$,
+then construct $\hat{M}$ which will print a blank on any input (ie. write a blank before the 
+first letter) and then do what $M$ does. From (a), we know that $L(\hat{M}) = L(M)$. 
+Ask oracle $\langle \hat{M} \rangle \in K$. If yes, accept. If no, reject.
+
+Therefore, $K$ is undecidable, as $ACCEPT-EMPTY$ is undecidable.
+
+\end{enumerate}
+
+\newpage
+
+\begin{prob}\end{prob}
+
+Let $J = \{ \langle M, S \rangle \pipe \text{M is a TM with some unreachable states } S \}$.
+
+$E_{TM} \leq_{T} J$ can be shown below:
+
+We can construct a decider for $E_{TM}$ using an oracle for $J$. On
+input $w \in \Sigma^*$, if $w$ is not encoding, reject. If $w$ is encoding of $M$,
+then we can pass $\langle M, \{ q_{accept} \} \rangle$ to oracle $J$. If oracle
+accepts, then we can reject, If oracle rejects, then we can accept. This because
+if $q_{accept}$ is unreachable, then $L(M) = \varnothing$. If it is reachable,
+then there are some words accepted, so $L(M) \neq \varnothing$.
+
+Therefore, $J$ is undecidable, as $E_{TM}$ is undecidable.
+
+\begin{prob}\end{prob}
+
+Formally, we can define $f: \Sigma^* \rightarrow \Sigma^*$ as follows:
+
+\[ f(x) = \begin{cases}
+
+    x & \text{if} x \notin A \\
+
+    1111\hat{x} & \text{where} \hat{x} = x \text{ with beginning 0 removed} \\
+
+    \end{cases}
+\]
+
+$f$ in this case creates a mapping for all elements in $A$ to a similar element in $B$
+by replacing the $0$ in beginning with $1111$. Thus, $A \leq_{M} B$.
+
+\begin{prob}\end{prob}
+
+For each language $L \subseteq \Sigma^*$, we want to show $L \text{ is enumerable } \Rightarrow L \leq_{m} A_{TM}$.
+
+For an arbitrary language $L$, if $L$ is enumerable, that means there is an enumerator $E$ that
+prints $w_0, w_1, w_2, \hdots \in L$. Using this enumerator, we can make a function $f$ such
+that $f(w) = \langle L, w \rangle$, for all $w$ enumerated by $E$.
+
+Formally, we can define $f: \Sigma^* \rightarrow \Sigma^*$ as follows:
+
+\[ f(x) = \begin{cases}
+
+    x & \text{if x is not enumerated by } E\\
+
+    \langle L, x \rangle & \text{if x is enumerated by} E\\
+
+    \end{cases}
+\]
+
+This $f$ applies to all enumerable languages $L$.
+
+\end{document}

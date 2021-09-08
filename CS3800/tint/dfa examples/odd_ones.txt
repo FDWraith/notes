@@ -1,0 +1,14 @@
+# recognizes the language of strings with an odd number of ones
+# over the language {0, 1}
+
+start: even
+
+accept-states: [odd]
+
+transitions:
+
+- [even, 0, even]
+- [even, 1, odd]
+
+- [odd, 0, odd]
+- [odd, 1, even]

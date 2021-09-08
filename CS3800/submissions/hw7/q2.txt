@@ -1,0 +1,49 @@
+# Turing machine that decides 
+# a^i b^j c^k such that i + j = k and i,j,k >= 0
+
+start: start
+accept: good
+reject: bad
+
+transitions:
+- [start, _, good, _, R]
+- [start, a, findC, _, R]
+- [start, b, findC2, _, R]
+- [start, c, bad, c, R]
+- [start, cx, noC, _, R]
+
+- [findC, _, bad, _, R]
+- [findC, a, findC, a, R]
+- [findC, b, findC, b, R]
+- [findC, c, return, cx, L]
+- [findC, cx, findC, cx, R]
+
+- [return, _, start, _, R]
+- [return, a, return, a, L]
+- [return, b, return, b, L]
+- [return, c, return, c, L]
+- [return, cx, return, cx, L]
+
+- [findC2, _, bad, _, R]
+- [findC2, a, bad, a, R]
+- [findC2, b, findC2, b, R]
+- [findC2, c, returnB, cx, L]
+- [findC2, cx, findC2, cx, R]
+
+- [returnB, _, startB, _, R]
+- [returnB, a, returnB, a, L]
+- [returnB, b, returnB, b, L]
+- [returnB, c, returnB, c, L]
+- [returnB, cx, returnB, cx, L]
+
+- [startB, _, bad, _, R]
+- [startB, a, bad, a, R]
+- [startB, b, findC2, _, R]
+- [startB, c, bad, c, R]
+- [startB, cx, noC, _, R]
+
+- [noC, _, good, _, R]
+- [noC, cx, noC, _, R]
+- [noC, c, bad, c, R]
+- [noC, a, bad, a, R]
+- [noC, b, bad, b, R]

@@ -1,0 +1,540 @@
+\documentclass[11pt]{article}
+
+\newcommand{\yourname}{Kevin Zhang}
+
+\def\comments{0}
+
+%format and packages
+
+%\usepackage{algorithm, algorithmic}
+\usepackage{forest}
+\usepackage{tikz}
+\usepackage{algpseudocode}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{tcolorbox}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{verbatim}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{microtype}
+\usepackage{kpfonts}
+\usepackage{palatino}
+	\DeclareMathAlphabet{\mathtt}{OT1}{cmtt}{m}{n}
+	\SetMathAlphabet{\mathtt}{bold}{OT1}{cmtt}{bx}{n}
+	\DeclareMathAlphabet{\mathsf}{OT1}{cmss}{m}{n}
+	\SetMathAlphabet{\mathsf}{bold}{OT1}{cmss}{bx}{n}
+	\renewcommand*\ttdefault{cmtt}
+	\renewcommand*\sfdefault{cmss}
+	\renewcommand{\baselinestretch}{1.06}
+
+\usepackage[boxruled,vlined,nofillcomment]{algorithm2e}
+	\SetKwProg{Fn}{Function}{\string:}{}
+	\SetKwFor{While}{While}{}{}
+	\SetKwFor{For}{For}{}{}
+	\SetKwIF{If}{ElseIf}{Else}{If}{:}{ElseIf}{Else}{:}
+	\SetKw{Return}{Return}
+	
+
+%enclosure macros
+\newcommand{\paren}[1]{\ensuremath{\left( {#1} \right)}}
+\newcommand{\bracket}[1]{\ensuremath{\left\{ {#1} \right\}}}
+\renewcommand{\sb}[1]{\ensuremath{\left[ {#1} \right\]}}
+\newcommand{\ab}[1]{\ensuremath{\left\langle {#1} \right\rangle}}
+
+%probability macros
+\newcommand{\ex}[2]{{\ifx&#1& \mathbb{E} \else \underset{#1}{\mathbb{E}} \fi \left[#2\right]}}
+\newcommand{\pr}[2]{{\ifx&#1& \mathbb{P} \else \underset{#1}{\mathbb{P}} \fi \left[#2\right]}}
+\newcommand{\var}[2]{{\ifx&#1& \mathrm{Var} \else \underset{#1}{\mathrm{Var}} \fi \left[#2\right]}}
+
+%useful CS macros
+\newcommand{\poly}{\mathrm{poly}}
+\newcommand{\polylog}{\mathrm{polylog}}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\pmo}{\{\pm1\}}
+\newcommand{\getsr}{\gets_{\mbox{\tiny R}}}
+\newcommand{\card}[1]{\left| #1 \right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\negl}{\mathrm{negl}}
+\newcommand{\eps}{\varepsilon}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\eqand}{\qquad \textrm{and} \qquad}
+\newcommand{\ind}[1]{\mathbb{I}\{#1\}}
+\newcommand{\sslash}{\ensuremath{\mathbin{/\mkern-3mu/}}}
+\newcommand{\pipe}{\hspace{3pt}|\hspace{3pt}}
+
+%mathbb
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+%mathcal
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+%theorem macros
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{fact}[thm]{Fact}
+\newtheorem{clm}[thm]{Claim}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{conj}[thm]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheoremstyle{case}{}{}{}{}{}{:}{ }{}
+\theoremstyle{case}
+\newtheorem{case}{Case}
+
+\theoremstyle{theorem}
+\newtheorem{prob}{Problem}
+\newtheorem{sol}{Solution}
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{document}
+{\large
+\noindent Name: \yourname}
+
+\vspace{15pt}
+
+% Problem 1
+\begin{prob}
+\end{prob}
+
+We are trying hire the best candidate. We have $n$ candidates $\pi_1, \pi_2, ..., \pi_n$ but we can only hire one.
+Our interview process is as follows: We interview and reject the first $\pi_1, ... \pi_{n/e}$ candidates, and then
+hire the first candidate from the $\pi_{n/e+1}, ..., \pi_n$ order that outperforms all of the first $n/e$ candidates.
+
+\begin{enumerate}[label=(\alph*)]
+
+% Part A
+\item For an index $i > n/e$, let $E_i$ be the event that $\pi_i$ is the best candidate. Find $P(\pi_i \text{ is hired } | E_i)$.
+
+In this scenario, $\pi_i$ is hired if no one is hired from the candidates of $\pi_1, ... \pi_{i-1}$. Let $\pi_k$ be the best
+candidate in this pool. Since we are conditioning on $E_i$, we can assume that $\pi_i > \pi_k$. The first question is where
+can $\pi_k$ go? We can break up the pool as follows:
+
+\[
+  \underbrace{\pi_1, \pi_2, ..., \pi_{n/e}}_{\text{always rejected}}, \underbrace{\pi_{n/e+1}, ... \pi_{i-1}}_{\text{always hired}}
+\] 
+
+Since $\pi_k$ is the best candidate in this pool, the only place it can go is in the first $n/e$ spots. Otherwise, $\pi_k$ will be
+hired instead of $\pi_i$. Since we have $i-1$ spots, total, we can express this as:
+
+\[
+  P(\pi_k \text{ not hired}) = \frac{n/e}{i-1}
+\]
+
+The second question is how many choices of $\pi_k$ we can have. The only condition we know is the $\pi_i > \pi_k$, but whether
+$\pi_k$ is 2nd best, 3rd best, we don't really know. But, this is also easy to figure out, because we have a limited pool of 
+candidates. The way to think of it is $\pi_k$ is put into the first $i-1$ pool. But the candidates better than $\pi_k$ that is not
+$\pi_i$ must go after $\pi_i$, because otherwise they would come before, thereby replacing $\pi_k$. Thus we have the following:
+
+\[
+  \text{\# of choices for $\pi_k$} = n - (i-1)
+\]
+
+Combine the two parts to get the probability of hiring $\pi_i$:
+
+\[
+  P(\pi_i \text{ is hired } | E_i) = \left( \frac{n/e}{i-1} \right) (n - (i-1)) 
+\]
+
+% Part B
+\item If $\pi^*$ is the best candidate, find an approximation for $P(\pi^* \text{ is hired})$.
+
+We can express this is a summation over all choices of $i$:
+
+$P(\pi^* \text{ is hired}) = \sum_{i=1}^n P(\pi_i \text{ is hired} | E_i) \space P(E_i)$. 
+
+Since $\pi_i$ won't be hired if it falls into the first $n/e$ candidates, we can reduce the expression:
+
+$P(\pi^* \text{ is hired}) = \sum_{i=n/e+1}^n P(\pi_i \text{ is hired} | E_i) \space P(E_i)$. 
+
+Expanding this, and then letting $j = i-1$ gets us:
+
+\begin{align*}
+  P(\pi^* \text{ is hired}) &= \sum_{i=n/e}^n P(\pi_i \text{ is hired} | E_i) \space P(E_i) \\
+                            &= \sum_{i=n/e+1}^n \left( \frac{(n/e)(n - (i-1))}{(i-1)} \right) \space \left( \frac{1}{n}\right) \\
+                            &= \sum_{j=n/e}^n \left( \frac{(n/e)(n - j)}{j} \right) \space \left( \frac{1}{n}\right) \\
+                            &= \sum_{j=n/e}^n \frac{(n - j)}{ej} \\
+                            &= \sum_{j=n/e}^n \frac{n}{ej} - \frac{j}{ej} \\
+                            &= \sum_{j=n/e}^n \frac{n}{ej} - \sum_{j=n/e}^n \frac{1}{e} \\
+                            &= \sum_{j=n/e}^n \frac{n}{ej} - \left( (n - n/e + 1) \frac{1}{e} \right) \\
+\end{align*}
+
+We still have to deal with the summation term. Here, we can use the approximation $\int_a^{b+1} \frac{\,dx}{x} \leq \sum_{i=a}^b \frac{1}{i} \leq \int_{a-1}^{b} \frac{\,dx}{x}$.
+Then, we can express the summation as follows:
+
+\begin{alignat}{2}
+ \int_{n/e}^{n+1} \frac{\,dx}{x}          &\leq \sum_{j=n/e}^n \frac{n}{ej} &\leq \int_{n/e-1}^{n} \frac{\,dx}{x} \\
+ \left( (n - n/e + 1) \frac{n}{e} \right) &\leq \sum_{j=n/e}^n \frac{n}{ej} &\leq \left( (n - n/e + 1) \frac{n}{e} \right)
+\end{alignat}
+
+Thus, our final probability is:
+
+\[
+  P(\pi^* \text{ is hired}) = \left( (n - n/e + 1) \frac{n-1}{e} \right)
+\]
+
+\end{enumerate}
+
+\newpage
+
+%Problem 2
+\begin{prob}
+\end{prob}
+
+Consider the following linear program
+
+\begin{align*}
+  \min &2x + 5y -3z\\
+  \text{ subject} &\text{ to }\\
+  2x - y + 2z &\geq 3\\
+  x - y - 2z &\geq -1\\
+  -x + y +5z &\geq 1\\
+  x + y &\geq 2\\
+  x,y,z &\geq 0
+\end{align*}
+
+\begin{enumerate}[label=(\alph*)]
+
+% Part A
+\item Find the dual of the linear program. 
+
+The dual formulation can be expressed from the original linear program
+with the following transpose:
+
+\begin{minipage}[t]{0.48\textwidth}
+\begin{align*}
+  \textbf{Linear} \\
+  \min & c^T x \\
+  Ax &\geq b \\
+  x &\geq 0
+\end{align*}
+\end{minipage}
+\begin{minipage}[t]{0.48\textwidth}
+\begin{flushright}
+\begin{align*}
+  \textbf{Dual}\\
+  \max &b^T x \\
+  A^Tx &\leq c \\
+  x &\geq 0
+\end{align*}
+\end{flushright}
+\end{minipage}
+
+As such, the values for $A, b, c^T$ can be pulled from the original linear program:
+
+\begin{align*}
+  A = \left[
+        \begin{array}{ccc}
+          2  & -1 &  2 \\
+          1  & -1 & -2 \\
+         -1  &  1 &  5 \\
+          2  &  1 &  0 \\
+        \end{array}
+       \right] \quad
+  b = \begin{bmatrix}
+          3 \\
+         -1 \\
+          1 \\
+          2
+       \end{bmatrix} \quad
+  c^T = \left[
+          \begin{matrix}
+            2 & 5 & -3 
+          \end{matrix}
+         \right]        
+\end{align*}
+
+Applying the transpose, and formulated as a dual, we get this:
+
+\begin{align*}
+  \max &3w -x + y + 2z\\
+  \text{ subject} &\text{ to }\\
+  2w + x - y + z &\leq 2\\
+  -w -x + y + z &\leq 5\\
+  2w -2x + 5y &\leq -3\\
+  w,x,y,z &\geq 0
+\end{align*}
+
+\newpage
+
+%Part B
+\item At $(x,y,z) = (2,0,3/2)$, the linear program has objective value $-1/2$. Show this is the optimal solution.
+
+We can show this via linear combination. First, we can organize the program as matrix vectors:
+
+\begin{align*}
+  v_1 &= 2x - y + 2z \geq 3\\
+  v_2 &= x - y - 2z \geq -1\\
+  v_3 &= -x + y +5z \geq 1\\
+  v_4 &= x + y \geq 2\\
+\end{align*}
+
+Then, we need to find a linear combination $B$ such that expressing $2x + 5y -3z$ in this basis 
+is solvable. (Note, this was reversed engineered from the objective value $-1/2$. But for the proof, we 
+can \textit{magically} find such a basis):
+
+\begin{alignat}{2}
+  b_1 &= v_2 + v_4 &= 2x - 2z \geq 1 \\
+  b_2 &= v_3 - v_1 &= -3x + 2y +3z \geq -2 \\
+  b_3 &= v_4 - 2v_1 &= -3x + 3y -4z \geq -4 
+\end{alignat}
+
+With a basis $\mathcal{B} = \text{span} \{ 
+  \begin{bmatrix}2\\0\\-2\end{bmatrix},  
+  \begin{bmatrix}-3\\2\\3\end{bmatrix}
+  \begin{bmatrix}-3\\3\\-4\end{bmatrix}
+\}$ we would like to express $\begin{bmatrix}2\\5\\-3\end{bmatrix}$
+in terms of this basis. This can be thought of as the following:
+
+\[
+  \left[
+    \begin{array}{ccc}
+      2  & -3 & -3 \\
+      0  &  2 &  3 \\
+     -2  &  3 & -4 \\
+    \end{array}
+  \right] \quad
+  \begin{bmatrix}
+    a \\
+    b \\
+    c
+  \end{bmatrix} \quad
+  = 
+  \quad
+  \begin{bmatrix}
+    2 \\
+    5 \\
+    -3
+  \end{bmatrix}
+\]
+
+Solving for $a,b,c$ nets us $a = \frac{65}{14}, b = \frac{16}{7}, c = \frac{1}{7}$. 
+Plugging into our basis vectors, and we get the following:
+
+\begin{align*}
+  ab_1 + bb_2 + cb_3 & \\
+  \frac{65}{14} \left( 2x - 2z \right) + \frac{16}{7} \left( -3x + 2y + 3z \right) + \frac{1}{7} \left( -3x + 3y - 4z \right) &\geq \frac{65}{14} (1) + \frac{16}{7} (-2) + \frac{1}{7} (-4) \\
+  \frac{1}{14} \left[ 65 \left( 2x - 2z \right) + 32 \left( -3x + 2y + 3z \right) + 2 \left( -3x + 3y - 4z \right) \right] &\geq \frac{1}{14} \left[ 65(1) + 32(-2) + 2(-4) \right] \\
+  \frac{1}{14} \left[ 130x - 130z -96x + 64y + 96z + 6x + 6y - 8z \right] &\geq \frac{1}{14} \left[ 65(1) + 32(-2) + 2(-4) \right] \\
+  \frac{1}{14} \left[ 28x + 70y - 42z \right] &\geq \frac{1}{14} \left[ -7 \right] \\
+  2x + 5y -3z &\geq -1/2
+\end{align*}
+
+Since the minimum value for $2x + 5y -3z$ is $-1/2$, it must be the optimal solution.
+
+\end{enumerate}
+
+\newpage
+
+% Problem 3
+\begin{prob}
+\end{prob}
+
+We are given two $n \times d$ matrices $A$ and $B$ where $n \gg d$. Let $a_1, ..., a_n$ be the column
+vectors corresponding to the rows of $A$, and similarly for $b_1, ..., b_n$. We would like to compute $P = A^T B$
+quickly. In this case, we will pick a $r \in 1, 2, ..., n$ with probability $p_r = \frac{||a_r|| \cdot ||b_r||}{\sum_{j=1}^n ||a_j|| \cdot ||b_j||}$.
+Our approximation is then $\hat{P} = \frac{1}{p_r}a_r b_r^T$.
+
+\begin{enumerate}[label=(\alph*)]
+
+\item Our error can be expressed in terms of $||P - \hat{P}||_F$. Show that 
+
+\[
+  \mathbb{E}\left[ ||P - \hat{P}||_F^2 \right] \leq \left( \sum_{i=1}^n ||a_i|| \cdot ||b_i|| \right)^2
+\]
+
+The Frobenius norm is the sum of the squares of the entries. $P = A^T B$ is a $d \times d$ matrix:
+
+\begin{align*}
+  \mathbb{E}\left[ ||P - \hat{P}||_F^2 \right] &= \mathbb{E}\left[ \sum_{u=1}^{d} \sum_{v=1}^{d} (P_{uv} - \hat{P}_{uv})^2 \right] \\
+                                               &\leq \mathbb{E}\left[ \sum_{u=1}^{d} \sum_{v=1}^{d} (\hat{P}_{uv})^2 \right] \\
+                                               &\leq \mathbb{E}\left[ \sum_{u=1}^{d} \sum_{v=1}^{d} (\frac{1}{p_r} ([a_r b_r^T]_{uv}))^2 \right] \\
+                                               &\leq \mathbb{E}\left[ \sum_{u=1}^{d} \sum_{v=1}^{d} \left( \frac{\sum_{i=1}^n ||a_i|| \cdot ||b_i||}{||a_r|| \cdot ||b_r||} \right)^2 ([a_r b_r^T]_{uv})^2 \right] \\
+                                               &\leq \mathbb{E}\left[ \left( \frac{\sum_{i=1}^n ||a_i|| \cdot ||b_i||}{||a_r|| \cdot ||b_r||} \right)^2 \sum_{u=1}^{d} \sum_{v=1}^{d} ([a_r b_r^T]_{uv})^2 \right] \\
+\end{align*}
+
+The expression $\sum_{u=1}^{d} \sum_{v=1}^{d} ([a_r b_r^T]_{uv})^2$ can be reduced by examining the matrix $a_r b_r^T$:
+
+\[
+  a_r b_r^T = 
+   \left[
+     \begin{array}{cccc}
+       a_r^{(1)} b_r^{(1)} & a_r^{(1)} b_r^{(2)} & ...    & a_r^{(1)} b_r^{(d)} \\
+       a_r^{(2)} b_r^{(1)} & a_r^{(2)} b_r^{(2)} & ...    & a_r^{(2)} b_r^{(d)} \\
+       \vdots              & \vdots              & \ddots & \vdots              \\
+       a_r^{(d)} b_r^{(1)} & a_r^{(d)} b_r^{(2)} & ...    & a_r^{(d)} b_r^{(d)} \\
+     \end{array}
+   \right]
+\]
+
+If we square all the entries, and then apply the summation, we get the following:
+
+\begin{align*}
+  \sum_{u=1}^{d} \sum_{v=1}^{d} ([a_r b_r^T]_{uv})^2 
+   &=
+   \left(
+     \begin{array}{cccccccc}
+         & (a_r^{(1)} b_r^{(1)})^2 & + & (a_r^{(1)} b_r^{(2)})^2 & + & ... & + & (a_r^{(1)} b_r^{(d)})^2 \\
+       + & (a_r^{(2)} b_r^{(1)})^2 & + & (a_r^{(2)} b_r^{(2)})^2 & + & ... & + & (a_r^{(2)} b_r^{(d)})^2 \\
+       + & ...                     &   &                         &   &     &   &                         \\
+       + & (a_r^{(d)} b_r^{(1)})^2 & + & (a_r^{(1)} b_r^{(2)})^2 & + & ... & + & (a_r^{(d)} b_r^{(d)})^2 \\
+     \end{array} 
+   \right) \\
+   &=
+   \left(
+     \begin{array}{ccccccccccc}
+         & (a_r^{(1)})^2 & \big[ & (b_r^{(1)})^2 & + & (b_r^{(2)})^2 & + & ... & + & (b_r^{(d)})^2 & \big] \\
+       + & (a_r^{(2)})^2 & \big[ & (b_r^{(1)})^2 & + & (b_r^{(2)})^2 & + & ... & + & (b_r^{(d)})^2 & \big] \\
+       + & ...           &       &               &   &               &   &     &   &               &       \\
+       + & (a_r^{(d)})^2 & \big[ & (b_r^{(1)})^2 & + & (b_r^{(2)})^2 & + & ... & + & (b_r^{(d)})^2 & \big] \\
+     \end{array}
+   \right) \\
+   &= ||a_r||^2 \cdot ||b_r||^2 \\
+   &= \left( ||a_r|| \cdot ||b_r|| \right)^2
+\end{align*}
+
+Plug this back into our original problem and we get the following:
+
+\begin{align*}
+  \mathbb{E}\left[ ||P - \hat{P}||_F^2 \right] &\leq \mathbb{E}\left[ \left( \frac{\sum_{i=1}^n ||a_i|| \cdot ||b_i||}{||a_r|| \cdot ||b_r||} \right)^2 \sum_{u=1}^{d} \sum_{v=1}^{d} ([a_r b_r^T]_{uv})^2 \right] \\
+                                               &= \mathbb{E}\left[ \left( \frac{\sum_{i=1}^n ||a_i|| \cdot ||b_i||}{||a_r|| \cdot ||b_r||} \right)^2 \left( ||a_r|| \cdot ||b_r|| \right)^2 \right] \\
+                                               &= \left( \sum_{i=1}^n ||a_i|| \cdot ||b_i|| \right)^2 \quad \checkmark
+\end{align*}
+
+\newpage
+
+% Part B
+\item Instead of using 1 sample $r$, we use $m$ i.i.d. samples $r_1, ..., r_m$ and then take the average result. 
+The new estimate is $\hat{P} = \frac{1}{m} \sum_{i=1}^m \frac{1}{p_{r_i}} a_{r_i} b_{r_i}^T$. What happens to the bound
+of $\mathbb{E}\left[ ||P - \hat{P}||_F^2 \right]$?
+
+We can use the same logic as above to manipulate terms:
+
+\begin{align*}
+  \mathbb{E}\left[ ||P - \hat{P}||_F^2 \right] &= \mathbb{E}\left[ \sum_{u=1}^{d} \sum_{v=1}^{d} (P_{uv} - \hat{P}_{uv})^2 \right] \\
+                                               &\leq \mathbb{E}\left[ \sum_{u=1}^{d} \sum_{v=1}^{d} (\hat{P}_{uv})^2 \right] \\
+                                               &\leq \mathbb{E}\left[ \sum_{u=1}^{d} \sum_{v=1}^{d} \left( \frac{1}{m} \sum_{i=1}^m \frac{1}{p_{r_i}} ([a_{r_i} b_{r_i}^T]_{uv}) \right)^2 \right] \\
+                                               &\leq \mathbb{E}\left[ (\frac{1}{m})^2 \sum_{i=1}^m (\frac{1}{p_{r_i}})^2 \sum_{u=1}^{d} \sum_{v=1}^{d} \left( [a_{r_i} b_{r_i}^T]_{uv}) \right)^2 \right] \\
+                                               &\leq \mathbb{E}\left[ (\frac{1}{m})^2 \sum_{i=1}^m \left( \sum_{i=1}^n ||a_i|| \cdot ||b_i|| \right)^2 \right] \\
+                                               &\leq \frac{1}{m} \left( \sum_{i=1}^n ||a_i|| \cdot ||b_i|| \right)^2 
+\end{align*}
+
+The error gets reduced by a factor of $\frac{1}{m}$
+
+\end{enumerate}
+
+\newpage
+
+% Problem 4
+\begin{prob}
+\end{prob}
+
+Consider a function $f(x) : \R^2 \rightarrow \R$ with
+
+\[
+  f(x) = \frac{7}{2} x_1^2 + 4 x_1 x_2 + \frac{13}{2} x_2^2 = \frac{1}{2} x^T \left[ \begin{matrix} 7 & 4 \\ 4 & 13 \end{matrix}\right] x
+\]
+
+\begin{enumerate}[label=(\alph*)]
+
+% Part A
+\item Show $f(x)$ is $\beta$-smooth for as small $\beta$ as you can.
+
+$\beta$-smoothness is defined by: 
+
+\[
+  || \nabla f(x) - \nabla f(y) || \leq \beta ||x - y|| 
+\]
+
+We can find $\nabla f(x)$ using the Jacobian matrix:
+
+\[
+  \nabla f(x) = \left[ \begin{matrix} \frac{\partial f}{\partial x_1} \\ \frac{\partial f}{\partial x_2} \end{matrix} \right] 
+              = \left[ \begin{matrix} 7x_1 + 4x_2 \\ 4x_1 + 13x_2 \end{matrix} \right] 
+              = \left[ \begin{matrix} 7 & 4 \\ 4 & 13 \end{matrix}\right] x
+\]
+
+We can apply this to the definition of $\beta$-smoothness:
+
+\begin{align*}
+  || \nabla f(x) - \nabla f(y) || &\leq \beta ||x - y|| \\
+  \left|\left| \left[ \begin{matrix} 7 & 4 \\ 4 & 13 \end{matrix}\right] x - \left[ \begin{matrix} 7 & 4 \\ 4 & 13 \end{matrix}\right] y \right|\right| &\leq \beta ||x - y|| \\
+  \left|\left| \left[ \begin{matrix} 7 & 4 \\ 4 & 13 \end{matrix}\right] \right|\right| \cdot || x - y || &\leq \beta ||x - y|| \\
+  \left|\left| \left[ \begin{matrix} 7 & 4 \\ 4 & 13 \end{matrix}\right] \right|\right| &\leq \beta \\
+  \left|\left| \left[ \begin{matrix} 7 & 4 \\ 4 & 13 \end{matrix}\right] \right|\right|_2 &\leq \beta \\
+  \sigma_1 &\leq \beta
+\end{align*}
+
+Computing the SVD of $\left[ \begin{matrix} 7 & 4 \\ 4 & 13 \end{matrix}\right]$, we have that $\sigma_1 = 15$. Thus, $\beta = 15$. 
+
+% Part B 
+\item Suppose we run gradient descent from starting point $x^{(0)} = (-1, 3)^T$ with constant step size $\eta = \frac{1}{\beta}$.
+Derive a closed form expression for $x^{(t)}$ and $f(x^{(t)})$. 
+
+We can derive a closed form expression for $x^{(t)}$ as follows:
+
+\begin{align*}
+  x^{(t)} &= x^{(t-1)} - \eta \nabla f(x^{(t-1)}) \\
+          &= x^{(t-1)} - \eta \left[ \begin{matrix} 7 & 4 \\ 4 & 13 \end{matrix}\right] x^{(t-1)} \\
+          &= \left(I - \frac{1}{\beta} \left[ \begin{matrix} 7 & 4 \\ 4 & 13 \end{matrix}\right] \right) x^{(t-1)} \\
+          &= \left(I - \frac{1}{15} \left[ \begin{matrix} 7 & 4 \\ 4 & 13 \end{matrix}\right] \right)^t x^{(0)} \\
+          &= \left(\frac{1}{15}\right)^t \left[ \begin{matrix} 8 & 4 \\ 4 & 2 \end{matrix}\right]^t x^{(0)} \\
+          &= \left(\frac{1}{15}\right)^t 
+             \left( 
+               \underbrace{
+                \left[ \begin{matrix} \frac{2 \sqrt{5}}{5} & \frac{-\sqrt{5}}{5} \\ \frac{\sqrt{5}}{5} & \frac{2\sqrt{5}}{5} \end{matrix}\right] 
+                \left[ \begin{matrix} 10 & 0 \\ 0 & 0 \end{matrix}\right]
+                \left[ \begin{matrix} \frac{2 \sqrt{5}}{5} & \frac{\sqrt{5}}{5} \\ \frac{-\sqrt{5}}{5} & \frac{2\sqrt{5}}{5} \end{matrix}\right] 
+               }_{\text{SVD of inner}}
+             \right)^t x^{(0)} \\
+          &= \left(\frac{1}{15}\right)^t 
+             \left[ \begin{matrix} \frac{2 \sqrt{5}}{5} & \frac{-\sqrt{5}}{5} \\ \frac{\sqrt{5}}{5} & \frac{2\sqrt{5}}{5} \end{matrix}\right] 
+             \left[ \begin{matrix} 10 & 0 \\ 0 & 0 \end{matrix}\right]^t
+             \left[ \begin{matrix} \frac{2 \sqrt{5}}{5} & \frac{\sqrt{5}}{5} \\ \frac{-\sqrt{5}}{5} & \frac{2\sqrt{5}}{5} \end{matrix}\right] 
+             x^{(0)} \\
+          &= \left(\frac{1}{15}\right)^t 
+             \left[ \begin{matrix} (\frac{4}{5})(10^t) & (\frac{2}{5})(10^t) \\ (\frac{2}{5})(10^t) & (\frac{1}{5})(10^t) \end{matrix}\right]
+             \begin{bmatrix} -1 \\ 3 \end{bmatrix} \\
+          &= \begin{bmatrix} \frac{2}{5} (\frac{2}{3})^t \\ \frac{1}{5} (\frac{2}{3})^t \end{bmatrix} 
+\end{align*}
+
+As $x^{(t)}$ must be a vector, the final answer is $x^{(t)} = \left(\frac{2}{5} (\frac{2}{3})^t, \frac{1}{5} (\frac{2}{3})^t \right)^T$.
+
+For $f(x^{(t)})$, the process is similar, but also different. We can rely on the fact that $x^{(t)} = \frac{2}{3} x^{(t-1)}$:
+
+\begin{align*}
+  f(x^{(t)}) &= \frac{1}{2} x^{(t)^T} \left[ \begin{matrix} 7 & 4 \\ 4 & 13 \end{matrix}\right] x^{(t)} \\
+             &= (\frac{2}{3})^2 \cdot \frac{1}{2} x^{(t-1)^T} \left[ \begin{matrix} 7 & 4 \\ 4 & 13 \end{matrix}\right] x^{(t-1)} \\
+             &= (\frac{2}{3})^2 \cdot f(x^{(t-1)}) \\
+             &= (\frac{2}{3})^{2t} \cdot f(x^{(0)})
+\end{align*}
+
+Solving for $f(x^{0}) = 50$ results in $f(x^{(t)}) = (\frac{2}{3})^{2t} \cdot 50$. 
+
+\end{enumerate}
+
+\end{document}

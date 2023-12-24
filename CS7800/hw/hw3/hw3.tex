@@ -1,0 +1,326 @@
+\documentclass[11pt]{article}
+
+\newcommand{\yourname}{Kevin Zhang}
+
+\def\comments{0}
+
+%format and packages
+
+%\usepackage{algorithm, algorithmic}
+\usepackage{forest}
+\usepackage{tikz}
+\usepackage{algpseudocode}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{tcolorbox}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{verbatim}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{microtype}
+\usepackage{kpfonts}
+\usepackage{palatino}
+	\DeclareMathAlphabet{\mathtt}{OT1}{cmtt}{m}{n}
+	\SetMathAlphabet{\mathtt}{bold}{OT1}{cmtt}{bx}{n}
+	\DeclareMathAlphabet{\mathsf}{OT1}{cmss}{m}{n}
+	\SetMathAlphabet{\mathsf}{bold}{OT1}{cmss}{bx}{n}
+	\renewcommand*\ttdefault{cmtt}
+	\renewcommand*\sfdefault{cmss}
+	\renewcommand{\baselinestretch}{1.06}
+
+\usepackage[boxruled,vlined,nofillcomment]{algorithm2e}
+	\SetKwProg{Fn}{Function}{\string:}{}
+	\SetKwFor{While}{While}{}{}
+	\SetKwFor{For}{For}{}{}
+	\SetKwIF{If}{ElseIf}{Else}{If}{:}{ElseIf}{Else}{:}
+	\SetKw{Return}{Return}
+	
+
+%enclosure macros
+\newcommand{\paren}[1]{\ensuremath{\left( {#1} \right)}}
+\newcommand{\bracket}[1]{\ensuremath{\left\{ {#1} \right\}}}
+\renewcommand{\sb}[1]{\ensuremath{\left[ {#1} \right\]}}
+\newcommand{\ab}[1]{\ensuremath{\left\langle {#1} \right\rangle}}
+
+%probability macros
+\newcommand{\ex}[2]{{\ifx&#1& \mathbb{E} \else \underset{#1}{\mathbb{E}} \fi \left[#2\right]}}
+\newcommand{\pr}[2]{{\ifx&#1& \mathbb{P} \else \underset{#1}{\mathbb{P}} \fi \left[#2\right]}}
+\newcommand{\var}[2]{{\ifx&#1& \mathrm{Var} \else \underset{#1}{\mathrm{Var}} \fi \left[#2\right]}}
+
+%useful CS macros
+\newcommand{\poly}{\mathrm{poly}}
+\newcommand{\polylog}{\mathrm{polylog}}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\pmo}{\{\pm1\}}
+\newcommand{\getsr}{\gets_{\mbox{\tiny R}}}
+\newcommand{\card}[1]{\left| #1 \right|}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\negl}{\mathrm{negl}}
+\newcommand{\eps}{\varepsilon}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\eqand}{\qquad \textrm{and} \qquad}
+\newcommand{\ind}[1]{\mathbb{I}\{#1\}}
+\newcommand{\sslash}{\ensuremath{\mathbin{/\mkern-3mu/}}}
+\newcommand{\pipe}{\hspace{3pt}|\hspace{3pt}}
+
+%mathbb
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+%mathcal
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+%theorem macros
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{fact}[thm]{Fact}
+\newtheorem{clm}[thm]{Claim}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{coro}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{conj}[thm]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheoremstyle{case}{}{}{}{}{}{:}{ }{}
+\theoremstyle{case}
+\newtheorem{case}{Case}
+
+\theoremstyle{theorem}
+\newtheorem{prob}{Problem}
+\newtheorem{sol}{Solution}
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{document}
+{\large
+\noindent Name: \yourname}
+
+\vspace{15pt}
+
+% Problem 1
+\begin{prob}
+\end{prob}
+
+We want to design two sequences $b_1, b_2, ...$ and $s_1, s_2, ...$ such that for
+sufficiently large $t$, the two properties hold:
+
+\begin{enumerate}
+
+\item The values of stock and bond decreases over time: $b_1 \cdot b_2 \cdot \cdot \cdot b_t \leq 0.99^t$.
+
+\item A strategy that rebalances across stock and bond after each day increases by at least $1.01^t$. 
+
+\end{enumerate}
+
+A simple approach to accomplish this is to alternate gains. Suppose we have a large factor $\alpha$ and a small
+factor $\beta$. We can represent each sequence as follows:
+
+\begin{align*}
+  b_1, b_2, b_3, ... &= \alpha, \beta, \alpha, ... \\
+  s_1, s_2, s_3, ... &= \beta, \alpha, \beta, ...
+\end{align*}
+
+Then, for sufficiently large $t$, each individual sequence converges to $(\alpha \beta)^{t/2}$, but the overall
+gain for each day converges to $(\alpha + \beta)^t$. This can be seen because $b_1 \cdot b_2 = \alpha \cdot \beta$.
+Furthermore, $b_1 + s_1 = \alpha + \beta$. It then suffices to have the following hold:
+
+\begin{align*}
+  \alpha \cdot \beta &\leq 0.99^{1/2} \\
+  \alpha + \beta &\geq 2.02 
+\end{align*}
+
+A simple example that satisfies this is $\alpha = 1.50$ and $\beta = 0.48$. 
+The wealth growth of each day is $1.05$, but each sequence decreases by $0.99$.
+
+\newpage
+
+% Problem 2
+\begin{prob}
+\end{prob}
+
+\begin{enumerate}[label=(\alph*)]
+
+\item Both the expert prediction and outcome is chosen uniformly randomly from $\{0, 1\}$. 
+This means that for any given $t$, the probability that a prediction is correct is $1/2$. With
+$1$ representing when a mistake was made and $0$ representing when there wasn't a mistake, the
+expected number of mistakes for any given $t$ is $1/2$. Thus: 
+
+\[
+  \mathbb{E}[\text{\# of mistakes}] = \sum_{t = 1}^T \mathbb{E}[\text{\# of mistakes at t}] = T/2
+\]
+
+The expected number of mistakes for any algorithm is $T/2$.
+
+\item Let's examine the probability that there exists an expert with no mistake.
+
+First, we can compute the probability that an indvidual expert $i$ makes no mistakes:
+
+\begin{align*}
+  \text{Pr[expert $i$ with no mistakes]} &= \prod_{t=1}^T (1/2) = (1/2)^T \\
+                                         &= 1/2^{log n - log(2 ln n)} \\
+                                         &= 2^{log(2 ln n) - log n} \\
+                                         &= \frac{2^{log(2 ln n)}}{2^{log n}} \\
+                                         &\simeq \frac{2 ln n}{n}
+\end{align*}
+
+Then, we can express the probability no experts make no mistakes: (we use the fact that $1 - x \leq e^{-x}$)
+
+\begin{align*}
+  \text{Pr[expert $i$ does not make no mistakes]} &= 1 - \frac{2 ln n}{n} \\
+  \text{Pr[no experts make no mistakes]} &= \prod_{i=1}^n (1 - \frac{2 ln n}{n}) \\
+                                         &= (1 - \frac{2 ln n}{n})^n \\
+                                         &\leq e^{-\frac{2 ln n}{n} \cdot n} \\
+                                         &\leq e^{-2 ln n} \\
+                                         &\leq \frac{1}{n^2}
+\end{align*}
+
+Thus, the probability there exists an expert that makes no mistakes is at least $1 - \frac{1}{n^2}$. 
+As such, with high probability, there is a best expert that makes $0$ mistakes. Since any algo 
+makes $T/2$ expected mistakes, with $T = log n - log(2 ln n)$, with $T$ being bounded by $log n$, 
+any algorithm must make $\Omega(log n)$ more mistakes than the best expert.
+
+\end{enumerate}
+
+\newpage
+
+% Problem 3
+\begin{prob}
+\end{prob}
+
+\begin{enumerate}[label=(\alph*)]
+
+\item We can express the probability that the number of zeros does not exceed $T/2 - \sqrt T /4$ as follows:
+
+\begin{align*}
+  \text{Pr[number of 0s is exactly 0]} &= (1/2)^{0} \times {T \choose 0} \times (1/2)^{T} \\
+  \text{Pr[number of 0s is exactly 1]} &= (1/2)^{1} \times {T \choose 1} \times (1/2)^{T-1} \\
+  \text{Pr[number of 0s is exactly 2]} &= (1/2)^{2} \times {T \choose 2} \times (1/2)^{T-2} \\
+                                       &\vdots \\
+  \text{Pr[number of 0s is exactly $T/2 - \sqrt T /4$]} &= (1/2)^{T/2 - \sqrt T /4} \times {T \choose T/2 - \sqrt T /4} \times (1/2)^{T/2 + \sqrt T /4} \\
+  \\
+  \text{Pr[number of 0s does not exceed $T/2 - \sqrt T /4$]} &= \text{sum of the above} \\
+                                                             &= \sum_{k=0}^{T/2 - \sqrt T /4} (1/2)^{k} \times {T \choose k} \times (1/2)^{T-k} \\
+                                                             &= \sum_{k=0}^{T/2 - \sqrt T /4} (1/2)^{T} \times {T \choose k} \\
+                                                             &= (1/2)^{T} \times \sum_{k=0}^{T/2 - \sqrt T /4} {T \choose k} 
+\end{align*}
+
+\newpage
+
+\item First, we want to show ${T \choose T/2} \leq \frac{2^T}{\sqrt T}$. 
+This can be done using Stirling's formula ($n! \simeq (\frac{n}{e})^{n} \sqrt{2 \pi n}$):
+
+\begin{align*}
+  {T \choose T/2} &= \frac{T!}{(T/2)!(T/2)!} \\
+                  &\simeq \frac{(\frac{T}{e})^T \sqrt{2 \pi T}}{[(\frac{T/2}{e})^{T/2} \sqrt{2 \pi T/2}]^2} \\
+                  &= \frac{(\frac{T}{e})^T \sqrt{2 \pi T}}{[(\frac{T}{2e})^{T} \sqrt{\pi T}^2]} \\
+                  &= \frac{2^T \sqrt{2 \pi T}}{\sqrt{\pi T}^2} \\
+                  &= \frac{2^T \sqrt{2}}{\sqrt{\pi T}} \\
+                  &= \sqrt{\frac{2}{\pi}} \frac{2^T}{\sqrt T} \\
+                  &\leq \frac{2^T}{\sqrt T}
+\end{align*}
+
+Next, we want to use the above fact to show that the probability that the number of 0s does not exceed $T/2 - \sqrt T / 4$ is
+at least 1/4. To do so, there's a couple of useful tricks that we can use. 
+
+First, the probability that the number of 0s does not exceed $T/2 - \sqrt T / 4$ is the same as the probability
+that the number of zeroes is greater than $T/2 + \sqrt T / 4$. This is because we are in a binomial distributiion.
+
+\begin{align*}
+  \text{Pr[number of 0s does not exceed $T/2 - \sqrt T /4$]} &= \text{Pr[number of 0s exceeds $T/2 + \sqrt T /4$]} \\
+  (1/2)^{T} \times \sum_{k=0}^{T/2 - \sqrt T /4} {T \choose k} &= (1/2)^{T} \times \sum_{k=(T/2 + \sqrt T / 4)}^{T} {T \choose k}
+\end{align*}
+
+Second, we can compute the probability as an \textit{area under the curve} and approximate it using width and height computations.
+We can let width be $T/2 + \sqrt T / 4$ and height be the highest point on the curve ($\frac{2^T}{\sqrt T}$). Thus:
+
+\begin{align*}
+  (1/2)^{T} \times \sum_{k=(T/2 + \sqrt T / 4)}^{T} {T \choose k} &\simeq (1/2)^{T} (T/2 + \sqrt T / 4) (\frac{2^T}{\sqrt T}) \\
+                                                                  &= (T/2)(\frac{1}{\sqrt T}) + (\sqrt T / 4)(\frac{1}{\sqrt T}) \\
+                                                                  &= (\frac{\sqrt T}{\sqrt 2}) + (\frac{1}{4}) \\
+                                                                  &\geq \frac{1}{4} \\
+  \\
+  \text{Pr[number of 0s does not exceed $T/2 - \sqrt T /4$]} &\geq \frac{1}{4}                                                                  
+\end{align*}
+
+Thus, with probability of at least $1/4$, the number of 0s does not exceed $T/2 - \sqrt T / 4$.
+
+Finally, we have shown that with constant probability, the number of 0s does not exceed $T/2 - \sqrt T / 4$. Because our
+experts are optimistic and pessimistic, the better expert will simply be $T$ minus the mistakes made by the worse expert.
+As such, the expected number of mistakes of the best expert is $T/2 - \sqrt T / 4$. Since any algorithm has an expected number of
+mistakes of $T/2$, we have a $\Omega(\sqrt T)$ bound.
+
+\end{enumerate}
+
+\newpage
+
+% Problem 4
+\begin{prob}
+\end{prob}
+
+Let's consider a more adaptive version of the weighted majority algorithm, such that a weight $w_i^{(t)}$ only 
+decreases when $w_i^{(t-1)} \geq \frac{\varepsilon \phi^{(t-1)}}{n(1-\varepsilon)}$. We want to find the
+number of mistakes the algorithm makes step $T_1$ to $T_2$ compared to an expert $i$. Let $M^{T}$ be
+then number of mistakes the algorithm makes, and $m^{(T)}_i$ be the number of mistakes from the expert. 
+
+We can examine how $\phi^{(t)}$ changes. For each weight, we have three possibilities:
+
+\begin{enumerate}
+
+\item $w_i^{(t)} = w_i^{(t-1)}$ for when expert $i$ is right.
+
+\item $w_i^{(t)} = w_i^{(t-1)}$ for when expert $i$ is wrong, but $w_i^{(t-1)} < \frac{\varepsilon \phi^{(t-1)}}{n(1-\varepsilon)}$.
+
+\item $w_i^{(t)} = (1-\varepsilon)w_i^{(t-1)}$ for when expert $i$ is wrong, and $w_i^{(t - 1)} \geq \frac{\varepsilon \phi^{(t-1)}}{n(1-\varepsilon)}$.
+
+\end{enumerate}
+
+If we substitute for the last condition, we get $w_i^{t} \geq \frac{\varepsilon}{n} \phi^{(t-1)}$. Since $\phi^{(t)}$ is
+the sum of weights, and the weights are decreasing by at most $\frac{\varepsilon}{n}$, we get the following:
+
+\[
+  \phi^{(t)} \leq (1 - \frac{\varepsilon}{n}) \phi^{(t - 1)}
+\]
+
+By induction over the interval $T_1$ to $T_2$, we get:
+
+\[
+  \phi^{(T_2)} \leq (1 - \frac{\varepsilon}{n})^{M^T} \phi^{(T_1)}
+\]
+
+We can also find a lower bound for $\phi^{(T_2)}$: this is the case of an
+expert having their weight reduced for every iteration.
+
+\[
+ \phi^{(T_2)} \geq (1 - \varepsilon)^{m_i^{(T)}} \phi^{(T_1)}
+\]
+
+Combining the two inequalities, we get:
+
+\begin{align*}
+  (1 - \varepsilon)^{m_i^{(T)}} \phi^{(T_1)} &\leq (1 - \frac{\varepsilon}{n})^{M^T} \phi^{(T_1)} \\
+               (1 - \varepsilon)^{m_i^{(T)}} &\leq (1 - \frac{\varepsilon}{n})^{M^T} \\
+            m_i^{(T)} \ln{(1 - \varepsilon)} &\leq M^T \ln{(1 - \frac{\varepsilon}{n})} \\
+                                         M^T &\geq m_i^{(T)} \frac{\ln(1 - \varepsilon)}{\ln(1 - \frac{\varepsilon}{n})} 
+\end{align*}
+
+\end{document}
